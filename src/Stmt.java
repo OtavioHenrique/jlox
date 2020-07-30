@@ -2,15 +2,11 @@ package lox;
 
 import java.util.List;
 
-import lox.Token;
-import lox.Expr;
-
 abstract class Stmt {
   interface Visitor<R> {
     R visitExpressionStmt(Expression stmt);
     R visitPrintStmt(Print stmt);
     R visitVarStmt(Var stmt);
-    R visitVariableStmt(Variable stmt);
   }
   static class Expression extends Stmt {
     Expression(Expr expression) {
@@ -49,18 +45,6 @@ abstract class Stmt {
 
     final Token name;
     final Expr initializer;
-  }
-  static class Variable extends Stmt {
-    Variable(Token name) {
-      this.name = name;
-    }
-
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-      return visitor.visitVariableStmt(this);
-    }
-
-    final Token name;
   }
 
   abstract <R> R accept(Visitor<R> visitor);
